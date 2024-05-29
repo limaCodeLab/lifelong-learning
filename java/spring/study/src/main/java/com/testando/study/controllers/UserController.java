@@ -1,5 +1,6 @@
 package com.testando.study.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.testando.study.entities.User;
 import com.testando.study.services.UserService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController // Classe controladora componente de recurso
@@ -48,5 +53,17 @@ public class UserController {
         User obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-    
+
+    /**
+     * Metodo HTTP POST Cria novo usuario
+     * @param obj
+     * @return
+     */
+    @PostMapping(value = "/insert")
+    public ResponseEntity<User> insert(@RequestBody User obj) {
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).body(obj);
+    }   
 }
