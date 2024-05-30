@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.testando.study.entities.User;
 import com.testando.study.repositories.UserRepository;
