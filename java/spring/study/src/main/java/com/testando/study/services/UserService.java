@@ -1,14 +1,20 @@
 package com.testando.study.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.testando.study.entities.User;
 import com.testando.study.repositories.UserRepository;
+import com.testando.study.services.exceptions.DatabaseException;
 import com.testando.study.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service // Componente de Servico
 public class UserService {
@@ -16,8 +22,8 @@ public class UserService {
     @Autowired // Injecao de dependencia entre classes, servico e repositorio
     private UserRepository repository;
 
-    public List<User> findAll() { 
-        return repository.findAll(); 
+    public List<User> findAll() {
+        return repository.findAll();
     }
 
     public User findById(Long id) {
@@ -29,11 +35,13 @@ public class UserService {
         return repository.save(obj);
     }
 
-    public User delete(Long id) {
-        Optional<User> obj = repository.findById(id);
-        User user = obj.get();
-        repository.deleteById(id);
-        return user;
+    public void deleteUser(Long id) {
+        try {
+            findById(id);
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public User update(Long id, User obj) {
