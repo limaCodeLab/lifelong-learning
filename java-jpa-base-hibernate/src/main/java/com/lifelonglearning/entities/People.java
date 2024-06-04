@@ -1,4 +1,4 @@
-package entities;
+package com.lifelonglearning.entities;
 
 import jakarta.persistence.*;
 

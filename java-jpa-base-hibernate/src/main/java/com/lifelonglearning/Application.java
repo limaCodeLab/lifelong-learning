@@ -1,7 +1,7 @@
 package com.lifelonglearning;
 
 
-import entities.People;
+import com.lifelonglearning.entities.People;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
