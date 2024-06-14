@@ -8,10 +8,10 @@ import java.util.List;
 /**
  *Neste casa sera trabalhao Covariancia e Contravariancia, que sao 2 tipos de wildcards
  *
- * Contravariancia: "? super Shape" indica que o tipo da variável pode ser qualquer supertipo de Number
+ * Contravariancia: "? super Number" indica que o tipo da variável pode ser qualquer supertipo de Number
  * (Nossa obj usada como base) podendo assim adicionar um elmento na lista, mas nao podendo realizar o get do elmento
  *
- * Covariancia: "? extends Shape" indica que o tipo da variável pode ser qualquer subtipo de Number, podendo
+ * Covariancia: "? extends Number" indica que o tipo da variável pode ser qualquer subtipo de Number, podendo
  * assim realizer o get do elemento, mas nao adicionar elmento na lista
  *
  * Utilizando wildcards para fazer o contravariancia e covariancia consigo copiar uma lista de tipos diferente dentro de
