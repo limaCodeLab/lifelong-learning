@@ -1,5 +1,10 @@
 package org.example.udemy.javacompleto.enumComposicao.contrato.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Department {
 
     private String name;
@@ -9,10 +14,5 @@ public class Department {
     public Department(String name) {
         this.name = name;
     }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+
 }

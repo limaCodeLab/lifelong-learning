@@ -1,5 +1,10 @@
 package org.example.udemy.javacompleto.arraysListasMemory.listas.exercicioLista.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Emplyoee {
 
     private Integer id;
@@ -11,26 +16,6 @@ public class Emplyoee {
     public Emplyoee(Integer id, String name, Double salary) {
         this.id = id;
         this.name = name;
-        this.salary = salary;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Double salary) {
         this.salary = salary;
     }
 
