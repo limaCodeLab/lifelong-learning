@@ -1,4 +1,4 @@
-package org.example.udemy.javacompleto.generics.wildcardTypes;
+package org.example.udemy.javacompleto.genericsSetMap.wildcardTypes;
 
 import java.util.Arrays;
 import java.util.List;

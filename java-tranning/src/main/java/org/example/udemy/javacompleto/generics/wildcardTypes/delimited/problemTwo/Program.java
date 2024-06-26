@@ -1,4 +1,4 @@
-package org.example.udemy.javacompleto.generics.wildcardTypes.delimited.problemTwo;
+package org.example.udemy.javacompleto.genericsSetMap.wildcardTypes.delimited.problemTwo;
 
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package org.example.udemy.javacompleto.generics.wildcardTypes.delimited.problemOne.application;
+package org.example.udemy.javacompleto.genericsSetMap.wildcardTypes.delimited.problemOne.application;
 
-import org.example.udemy.javacompleto.generics.wildcardTypes.delimited.problemOne.entities.Circle;
-import org.example.udemy.javacompleto.generics.wildcardTypes.delimited.problemOne.entities.Rectangle;
-import org.example.udemy.javacompleto.generics.wildcardTypes.delimited.problemOne.entities.Shape;
+import org.example.udemy.javacompleto.genericsSetMap.wildcardTypes.delimited.problemOne.entities.Circle;
+import org.example.udemy.javacompleto.genericsSetMap.wildcardTypes.delimited.problemOne.entities.Rectangle;
+import org.example.udemy.javacompleto.genericsSetMap.wildcardTypes.delimited.problemOne.entities.Shape;
 
 import java.util.ArrayList;
 import java.util.List;

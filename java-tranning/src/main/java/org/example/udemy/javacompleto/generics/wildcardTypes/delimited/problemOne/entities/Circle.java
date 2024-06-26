@@ -1,4 +1,4 @@
-package org.example.udemy.javacompleto.generics.wildcardTypes.delimited.problemOne.entities;
+package org.example.udemy.javacompleto.genericsSetMap.wildcardTypes.delimited.problemOne.entities;
 
 
 import lombok.Getter;
