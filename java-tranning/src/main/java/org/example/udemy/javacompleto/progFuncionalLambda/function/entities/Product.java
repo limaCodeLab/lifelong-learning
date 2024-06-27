@@ -1,4 +1,4 @@
-package org.example.udemy.javacompleto.progFuncionalLambda.predicate.entities;
+package org.example.udemy.javacompleto.progFuncionalLambda.function.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,12 +18,12 @@ public class Product {
         this.price = price;
     }
 
-    public static boolean staticProductTest(Product product) {
-        return product.getPrice() >= 100.0;
+    public static String staticUpperCaseName(Product product) {
+        return product.getName().toUpperCase();
     }
 
-    public boolean nonStaticProductTest() {
-        return this.price >= 100.0;
+    public String nonStaticUpperCaseNameApply() {
+        return this.name.toUpperCase();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
-                ", price=" + price +
+                ", price=" + String.format("%.2f", price) +
                 '}';
     }
 }

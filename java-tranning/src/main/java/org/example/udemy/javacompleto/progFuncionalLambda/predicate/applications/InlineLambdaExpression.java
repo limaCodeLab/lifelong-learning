@@ -1,13 +1,13 @@
 package org.example.udemy.javacompleto.progFuncionalLambda.predicate.applications;
 
 import org.example.udemy.javacompleto.progFuncionalLambda.predicate.entities.Product;
-import org.example.udemy.javacompleto.progFuncionalLambda.predicate.util.PredicateProduct;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 
-public class ImplementsFuncionalClass {
+public class InlineLambdaExpression {
 
     public static void main(String[] args) {
 
@@ -20,8 +20,10 @@ public class ImplementsFuncionalClass {
         list.add(new Product("Tablet", 350.50));
         list.add(new Product("HD Case", 80.90));
 
-        // Estanciado a partir da classe util/PredicateProduct onde encontra-se a implemnetação do método test Predicate
-        list.removeIf(new PredicateProduct());
+        double max = 100.00;
+
+        // Inline Lambda Expression
+        list.removeIf(product -> product.getPrice() >= max);
 
         list.forEach(System.out::println);
 
