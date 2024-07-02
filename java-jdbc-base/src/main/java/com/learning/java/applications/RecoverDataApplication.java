@@ -1,4 +1,4 @@
-package com.learning.java.application;
+package com.learning.java.applications;
 
 import com.learning.java.db.DbConnectionMap;
 import com.learning.java.db.DbException;
