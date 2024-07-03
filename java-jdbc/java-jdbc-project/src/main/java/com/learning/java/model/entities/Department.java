@@ -1,4 +1,4 @@
-package com.learning.java.entities;
+package com.learning.java.model.entities;
 
 import lombok.Getter;
 import lombok.Setter;
