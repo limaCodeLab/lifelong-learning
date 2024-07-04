@@ -9,19 +9,17 @@ import java.util.Date;
 import java.util.Objects;
 
 @Getter
+@Setter
 public class Seller implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    @Setter
     private String name;
-    @Setter
     private String email;
-    @Setter
     private Date birthDate;
-    @Setter
     private Double baseSalary;
+    private Department department;
 
     public Seller(){
 
@@ -57,6 +55,7 @@ public class Seller implements Serializable {
                 ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
                 ", baseSalary=" + baseSalary +
+                ", department=" + department +
                 '}';
     }
 }

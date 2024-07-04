@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
+@Setter
 public class Department implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L; // para o objeto seja transformados em sequencia de bytes, trafego em rede
 
     private Integer id;
-    @Setter
     private String name;
 
     public Department() {
