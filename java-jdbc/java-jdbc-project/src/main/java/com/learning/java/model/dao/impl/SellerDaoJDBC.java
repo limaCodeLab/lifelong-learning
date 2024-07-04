@@ -9,7 +9,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -19,6 +22,7 @@ public class SellerDaoJDBC implements SellerDao {
     private PreparedStatement pstmt;
     private Statement st;
     private ResultSet rs;
+    private Department department;
 
     public SellerDaoJDBC(Connection connection) {
         this.connection = connection;
@@ -55,6 +59,49 @@ public class SellerDaoJDBC implements SellerDao {
                 return instantiateSeller(rs, dp);
             }
             return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DbConnectionMap.closeResultSet(rs);
+            DbConnectionMap.closeStatement(pstmt);
+        }
+
+    }
+
+    @Override
+    public List<Seller> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public List<Seller> findByDepartment(Department department) {
+        try {
+            pstmt = connection.prepareStatement(
+                    "SELECT seller.*,department.Name as DepName "
+                            + "FROM seller INNER JOIN department "
+                            + "ON seller.DepartmentId = department.Id "
+                            + "WHERE DepartmentId = ? "
+                            + "ORDER BY Name");
+
+            pstmt.setInt(1, department.getId());
+            rs = pstmt.executeQuery();
+
+            List<Seller> list = new ArrayList<>();
+            Map<Integer, Department> map = new HashMap<>(); // Não permite repetições, aloca os departamentos na memoria
+
+            while (rs.next()){
+                this.department = map.get(rs.getInt("DepartmentId"));
+
+                // Verifico se o departamento ja foi instanciado, se o mesmo encontra-se no map
+                if (this.department == null){
+                    this.department = instantiateDepartment(rs);
+                    map.put(rs.getInt("DepartmentId"), this.department);
+                }
+                list.add(instantiateSeller(rs, this.department));
+            }
+
+            return list;
+
         }
         catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -63,8 +110,8 @@ public class SellerDaoJDBC implements SellerDao {
             DbConnectionMap.closeResultSet(rs);
             DbConnectionMap.closeStatement(pstmt);
         }
-
     }
+
 
     private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
         Seller obj = new Seller();
@@ -84,8 +131,4 @@ public class SellerDaoJDBC implements SellerDao {
         return dep;
     }
 
-    @Override
-    public List<Seller> findAll() {
-        return List.of();
-    }
 }
