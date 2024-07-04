@@ -19,7 +19,6 @@ public class ProgramSeller {
 
         SellerDao sellerDao = DaoFactory.createSellerDao(); // Nao se faz necessario deixar expicito a interface
 
-
         System.out.println("=== TEST 1: seller findById =====");
         seller = sellerDao.findById(3);
         System.out.println(seller);
@@ -44,6 +43,9 @@ public class ProgramSeller {
         sellerDao.update(seller);
         System.out.println("Update completed");
 
+        System.out.println("\n=== TEST 6: seller delete =====");
+        sellerDao.deleteById(10);
+        System.out.println("Delete completed");
 
         DbConnectionMap.closeConnection();
     }
