@@ -20,7 +20,6 @@ public class SellerDaoJDBC implements SellerDao {
 
     private Connection connection;
     private PreparedStatement pstmt;
-    private Statement st;
     private ResultSet rs;
     private Department department;
 
@@ -30,6 +29,37 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void insert(Seller obj) {
+        try {
+            pstmt = connection.prepareStatement(
+                    "INSERT INTO seller "
+                            + "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
+                            + "VALUES "
+                            + "(?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, obj.getName());
+            pstmt.setString(2, obj.getEmail());
+            pstmt.setDate(3, new Date(obj.getBirthDate().getTime()));
+            pstmt.setDouble(4, obj.getBaseSalary());
+            pstmt.setInt(5, obj.getDepartment().getId());
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    obj.setId(id); // populando o id ao objeto
+                }
+                DbConnectionMap.closeResultSet(rs); // fechando aqui pois nao vai estar no escopo do finally
+            } else {
+                throw new DbException("Unexpected error! No rows affected!");
+            }
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DbConnectionMap.closeStatement(pstmt);
+        }
 
     }
 
@@ -65,12 +95,43 @@ public class SellerDaoJDBC implements SellerDao {
             DbConnectionMap.closeResultSet(rs);
             DbConnectionMap.closeStatement(pstmt);
         }
-
     }
 
     @Override
     public List<Seller> findAll() {
-        return List.of();
+        try {
+            pstmt = connection.prepareStatement(
+                    "SELECT seller.*,department.Name as DepName "
+                            + "FROM seller INNER JOIN department "
+                            + "ON seller.DepartmentId = department.Id "
+                            + "ORDER BY Name");
+
+            rs = pstmt.executeQuery();
+
+            List<Seller> list = new ArrayList<>();
+            Map<Integer, Department> map = new HashMap<>(); // Não permite repetições, aloca os departamentos na memoria
+
+            while (rs.next()){
+                this.department = map.get(rs.getInt("DepartmentId"));
+
+                // Verifico se o departamento ja foi instanciado, se o mesmo encontra-se no map
+                if (this.department == null){
+                    this.department = instantiateDepartment(rs);
+                    map.put(rs.getInt("DepartmentId"), this.department);
+                }
+                list.add(instantiateSeller(rs, this.department));
+            }
+
+            return list;
+
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DbConnectionMap.closeResultSet(rs);
+            DbConnectionMap.closeStatement(pstmt);
+        }
     }
 
     @Override
